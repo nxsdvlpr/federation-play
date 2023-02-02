@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../../node_modules/@generated/post/prisma/client"
+}
+
+generator nestgql {
+  provider           = "node node_modules/prisma-nestjs-graphql"
+  output             = "../generated/prisma/nestgql"
+  noAtomicOperations = true
+
+  fields_NG_from   = "@nestjs/graphql"
+  fields_NG_output = false
+  fields_NG_model  = true
+
+  fields_Scalars_from    = "graphql-scalars"
+  fields_Scalars_input   = true
+  fields_Scalars_output  = true
+  fields_Validator_input = true
+  fields_Validator_from  = "class-validator"
+
+  // decorate_1_type   = "Post"
+  // decorate_1_field  = user
+  // decorate_1_name   = "Field"
+  // decorate_1_from   = "src/user/user.model"
+  // decorate_1_input  = false
+  // decorate_1_output = true
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// @NG.Directive('@key(fields: "id")')
+model Post {
+  /// @FieldType({ name: 'Scalars.GraphQLCuid', from: 'graphql-scalars', input: true, output: true})
+  id        String    @id @default(cuid())
+  /// @FieldType({ name: 'Scalars.GraphQLCuid', from: 'graphql-scalars', input: true, output: true})
+  /// @HideField({ output: false, input: true })
+  authorId  String
+  /// @HideField({ output: false, input: true })
+  /// @FieldType('Scalars.GraphQLDateTime')
+  createdAt DateTime  @default(now())
+  /// @HideField({ output: false, input: true })
+  /// @FieldType('Scalars.GraphQLDateTime')
+  updatedAt DateTime  @updatedAt
+  /// @HideField({ output: false, input: true })
+  slug      String    @unique
+  title     String
+  content   String?
+  published Boolean   @default(false)
+  /// @FieldType({ name: 'PostImageDto', from: 'src/post/dto/post-image.dto', input: false, output: true})
+  images    Json[]    @default([])
+  viewCount Int       @default(0)
+  comments  Comment[] @relation(name: "CommentToPost")
+  tags      Tag[]
+}
+
+model Comment {
+  /// @FieldType({ name: 'Scalars.GraphQLCuid', from: 'graphql-scalars', input: true, output: true})
+  id        String   @id @default(cuid())
+  /// @FieldType({ name: 'Scalars.GraphQLCuid', from: 'graphql-scalars', input: true, output: true})
+  postId    String
+  /// @HideField({ output: false, input: true })
+  /// @FieldType('Scalars.GraphQLDateTime')
+  createdAt DateTime @default(now())
+  /// @HideField({ output: false, input: true })
+  /// @FieldType('Scalars.GraphQLDateTime')
+
+  updatedAt DateTime @updatedAt
+  content   String
+  /// @HideField({ output: false, input: true })
+  feed      Post?    @relation(name: "CommentToPost", fields: [postId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model Tag {
+  /// @FieldType({ name: 'Scalars.GraphQLCuid', from: 'graphql-scalars', input: true, output: true})
+  id        String   @id @default(cuid())
+  /// @HideField({ output: false, input: true })
+  /// @FieldType('Scalars.GraphQLDateTime')
+  createdAt DateTime @default(now())
+  /// @HideField({ output: false, input: true })
+  /// @FieldType('Scalars.GraphQLDateTime')
+  updatedAt DateTime @updatedAt
+  slug      String   @unique
+  label     String
+  posts     Post[]
+}

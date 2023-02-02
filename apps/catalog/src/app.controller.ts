@@ -1,0 +1,11 @@
+import { Controller, Get, Res } from '@nestjs/common';
+
+@Controller('app')
+export class AppController {
+  @Get('alive')
+  alive(@Res() res): string {
+    return res.json({
+      status: true,
+    });
+  }
+}

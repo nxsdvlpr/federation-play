@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalog
+  labels:
+    app: federation
+    service: catalog
+spec:
+  type: ClusterIP
+  selector:
+    app: catalog
+  ports:
+    - port: 4300
+      targetPort: 4300

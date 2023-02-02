@@ -1,0 +1,13 @@
+import { Query, Resolver } from '@nestjs/graphql';
+import { {{pascalCase name}}Service } from './{{lowerCase name}}.service';
+import { {{pascalCase name}} } from 'generated/prisma/nestgql/{{lowerCase name}}/{{lowerCase name}}.model';
+
+@Resolver(() => {{pascalCase name}})
+export class {{pascalCase name}}Resolver {
+  constructor(private {{lowerCase name}}Service: {{pascalCase name}}Service) {}
+
+  @Query(() => {{pascalCase name}})
+  async {{lowerCase name}}s() {
+    return this.{{lowerCase name}}Service.first();
+  }
+}

@@ -1,0 +1,15 @@
+import { Inject, Injectable } from '@nestjs/common';
+import { PrismaClient } from '@generated/{{lowerCase workspace}}/prisma/client';
+
+@Injectable()
+export class {{pascalCase name}}Service {
+  constructor(@Inject('PRISMA_CLIENT') private prisma: PrismaClient) {}
+
+  all() {
+    return this.prisma.{{lowerCase name}}.findMany();
+  }
+
+  first() {
+    return this.prisma.{{lowerCase name}}.findFirst();
+  }
+}

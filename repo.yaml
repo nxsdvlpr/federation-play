@@ -1,0 +1,14 @@
+apps:
+  - name: 'auth'
+    type: 'nestjs'
+  - name: 'post'
+    type: 'nestjs'
+  - name: 'catalog'
+    type: 'nestjs'
+
+packages:
+  - name: 'codegen'
+  - name: 'config'
+  - name: 'prisma-module'
+  - name: 'tsconfig'
+  - name: 'util'

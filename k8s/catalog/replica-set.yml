@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: catalog
+  labels:
+    app: federation
+    service: catalog
+spec:
+  replicas: 1
+  selector:
+    matchLabels: 
+      app: catalog
+  template:
+    metadata:
+      name: catalog
+      labels:
+        app: catalog
+        service: catalog
+    spec:
+      containers:
+        - name: catalog
+          image: localhost:5000/nxsdvlpr/federation_catalog:latest
+          ports:    
+            - containerPort: 4300

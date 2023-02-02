@@ -1,0 +1,78 @@
+version: "3.9"
+
+services:
+  nginx:
+    image: nxsdvlpr/federation_nginx
+    container_name: federation_nginx
+    build:
+      context: ./
+      dockerfile: ./nginx/Dockerfile
+    hostname: nginx
+    ports:
+      - 80:80
+    networks:
+      - federation_net
+    depends_on:
+      - gateway
+
+  gateway:
+    image: nxsdvlpr/federation_gateway
+    container_name: federation_gateway
+    build:
+      context: ./
+      dockerfile: ./apps/gateway/Dockerfile
+    hostname: gateway
+    restart: always
+    networks:
+      - federation_net
+    depends_on:
+      - auth
+      - post
+      
+  auth:
+    image: nxsdvlpr/federation_auth
+    container_name: federation_auth
+    build:
+      context: ./
+      dockerfile: ./apps/auth/Dockerfile
+    hostname: auth
+    restart: always
+    networks:
+      - federation_net
+  
+  post:
+    image: nxsdvlpr/federation_post
+    container_name: federation_post
+    build:
+      context: ./
+      dockerfile: ./apps/post/Dockerfile
+    hostname: post
+    restart: always
+    networks:
+      - federation_net
+
+  base:
+    image: nxsdvlpr/federation_base
+    container_name: federation_base
+    build:
+      context: ./
+      dockerfile: ./apps/base/Dockerfile
+    hostname: base
+    restart: always
+    networks:
+      - federation_net
+
+  catalog:
+    image: nxsdvlpr/federation_catalog
+    container_name: federation_catalog
+    build:
+      context: ./
+      dockerfile: ./apps/catalog/Dockerfile
+    hostname: catalog
+    restart: always
+    networks:
+      - federation_net
+
+networks:
+  federation_net:
+    driver: bridge

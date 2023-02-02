@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: post
+  labels:
+    app: federation
+    service: post
+spec:
+  replicas: 1
+  selector:
+    matchLabels: 
+      app: post
+  template:
+    metadata:
+      name: post
+      labels:
+        app: post
+        service: post
+    spec:
+      containers:
+        - name: post
+          image: localhost:5000/nxsdvlpr/federation_post:latest
+          ports:    
+            - containerPort: 4200

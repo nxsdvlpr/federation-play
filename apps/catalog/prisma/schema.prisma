@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../../node_modules/@generated/catalog/prisma/client"
+}
+
+generator nestgql {
+  provider           = "node node_modules/prisma-nestjs-graphql"
+  output             = "../generated/prisma/nestgql"
+  noAtomicOperations = true
+
+  fields_NG_from   = "@nestjs/graphql"
+  fields_NG_output = false
+  fields_NG_model  = true
+
+  fields_Scalars_from    = "graphql-scalars"
+  fields_Scalars_input   = true
+  fields_Scalars_output  = true
+  fields_Validator_input = true
+  fields_Validator_from  = "class-validator"
+
+  // decorate_1_type   = "Post"
+  // decorate_1_field  = user
+  // decorate_1_name   = "Field"
+  // decorate_1_from   = "src/user/user.model"
+  // decorate_1_input  = false
+  // decorate_1_output = true
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// @NG.Directive('@key(fields: "id")')
+model Product {
+  /// @FieldType({ name: 'Scalars.GraphQLCuid', from: 'graphql-scalars', input: true, output: true})
+  id        String   @id @default(cuid())
+  /// @HideField({ output: false, input: true })
+  /// @FieldType('Scalars.GraphQLDateTime')
+  createdAt DateTime @default(now())
+  /// @HideField({ output: false, input: true })
+  /// @FieldType('Scalars.GraphQLDateTime')
+  updatedAt DateTime @updatedAt
+  /// @HideField({ output: false, input: true })
+  slug      String   @unique
+  name      String
+  /// @FieldType({ name: 'ProductImageDto', from: 'src/product/dto/product-image.dto', input: false, output: true})
+  images    Json[]   @default([])
+  price     Int      @default(0)
+}

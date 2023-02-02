@@ -1,0 +1,22 @@
+{
+  "name": "@nxs/helper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsc -w",
+    "build": "tsc",
+    "prepare": "npm run build",
+    "format": "prettier --write \"src/**/*.ts\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "slugify": "^1.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^16.0.0"
+  }
+}

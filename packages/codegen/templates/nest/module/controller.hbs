@@ -1,0 +1,18 @@
+import { Controller, Get } from '@nestjs/common';
+
+import { {{pascalCase name}}Service } from './{{lowerCase name}}.service';
+
+@Controller('{{lowerCase name}}')
+export class {{pascalCase name}}Controller {
+  constructor(private readonly {{lowerCase name}}Service: {{pascalCase name}}Service) {}
+
+  @Get()
+  index() {
+    return this.{{lowerCase name}}Service.all();
+  }
+
+  @Get('first')
+  first() {
+    return this.{{lowerCase name}}Service.first();
+  }
+}

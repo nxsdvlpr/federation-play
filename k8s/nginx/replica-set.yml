@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx
+  labels:
+    app: federation
+    service: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels: 
+      app: nginx
+  template:
+    metadata:
+      name: nginx
+      labels:
+        app: nginx
+        service: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: localhost:5000/nxsdvlpr/federation_nginx:latest
+          ports:    
+            - containerPort: 80

@@ -1,0 +1,29 @@
+{
+  "name": "prisma-module",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "files": [
+    "dist/**/*",
+    "*.md"
+  ],
+  "scripts": {
+    "dev": "tsc -w",
+    "build": "tsc",
+    "prepare": "npm run build",
+    "format": "prettier --write \"src/**/*.ts\""
+  },
+  "dependencies": {
+    "@nestjs/config": "^2.2.0",
+    "dotenv": "^16.0.3",
+    "typescript": "latest"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^9.0.0",
+    "@nestjs/config": "^2.2.0"
+  },
+  "devDependencies": {
+    "@nestjs/common": "^9.2.0",
+    "config": "workspace:^",
+    "tsconfig": "workspace:^"
+  }
+}

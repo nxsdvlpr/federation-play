@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../../node_modules/@generated/auth/prisma/client"
+}
+
+generator nestgql {
+  provider           = "node node_modules/prisma-nestjs-graphql"
+  output             = "../generated/prisma/nestgql"
+  noAtomicOperations = true
+
+  fields_NG_from   = "@nestjs/graphql"
+  fields_NG_output = false
+  fields_NG_model  = true
+
+  fields_Scalars_from    = "graphql-scalars"
+  fields_Scalars_input   = true
+  fields_Scalars_output  = true
+  fields_Validator_input = true
+  fields_Validator_from  = "class-validator"
+
+  // fields_SID_from   = "src/sid.scalar"
+  // fields_SID_input  = true
+  // fields_SID_output = true
+
+  graphqlScalars_EmailAddress_name      = "GraphQLEmailAddress"
+  graphqlScalars_EmailAddress_specifier = "graphql-scalars"
+
+  graphqlScalars_Cuid_name      = "GraphQLCuid"
+  graphqlScalars_Cuid_specifier = "graphql-scalars"
+
+  // decorate_1_type          = "UserWhereInput"
+  // decorate_1_field         = id
+  // decorate_1_from          = "src/sid.filter"
+  // decorate_1_name          = Field
+  // decorate_1_arguments     = "['() => SIDFilter','{nullable:true}']"
+  // decorate_1_defaultImport = true
+
+  // useInputType_WhereInput_ALL = "WhereInput"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// @NG.Directive('@key(fields: "id")')
+model User {
+  /// @FieldType({ name: 'Scalars.GraphQLCuid', from: 'graphql-scalars', input: true, output: true})
+  id       String @id @default(cuid())
+  /// @FieldType({ name: 'Scalars.GraphQLEmailAddress', from: 'graphql-scalars', input: true, output: true})
+  email    String @unique
+  password String
+  name     String
+}
